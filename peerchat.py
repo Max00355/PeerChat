@@ -10,7 +10,7 @@ class PeerChat:
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.db = landerdb.Connect("nodes")
-        self.brok_ip = ""
+        self.brok_ip = "198.147.20.190"
         self.brok_port = 5000
         self.nick = "Test"
         self.friends = []
