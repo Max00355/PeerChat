@@ -13,13 +13,14 @@ class PeerChat:
         self.brok_ip = ""
         self.brok_port = 5000
         self.nick = "Test"
+        self.friends = ["Frank"]
 
     def listen(self):
         self.command = {
 
             "HERE":self.here,
-            "MSG":self.msg, 
-        } 
+            "MSG":self.msg,
+            } 
 
         global address
         self.sock.bind(address)
@@ -46,7 +47,8 @@ class PeerChat:
     def here(self, addr, data):
         if not self.db.find("nodes", {"addr":addr}):
             self.db.insert("nodes", {"addr":addr})
-    
+        if data['nick'] in self.friends:
+            print data['nick'] + " has come online."
     def msg(self, addr, data):
         if data['to'] == self.nick:
             print data['nick']+": "+data['data']
@@ -64,7 +66,7 @@ class PeerChat:
         address = ("0.0.0.0", int(msg))   
         for x in self.db.find("nodes", "all"):
             addr = tuple(x['addr'])
-            self.sock.sendto(json.dumps({"cmd":"HERE"}),addr)
+            self.sock.sendto(json.dumps({"cmd":"HERE", "nick":self.nick}),addr)
     
 if __name__ == "__main__":
     PeerChat().GetNodes()
