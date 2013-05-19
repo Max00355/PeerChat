@@ -13,7 +13,7 @@ class PeerChat:
         self.brok_ip = ""
         self.brok_port = 5000
         self.nick = "Test"
-        self.friends = ["Frank"]
+        self.friends = []
 
     def listen(self):
         self.command = {
